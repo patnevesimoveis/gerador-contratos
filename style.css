@@ -1,0 +1,113 @@
+/* Configurações Gerais da Tela */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    margin: 0;
+    background-color: #f0f2f5;
+}
+
+/* Painel Esquerdo de Inputs */
+#painel-controle {
+    width: 350px;
+    background-color: #ffffff;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+    height: 100vh;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+#painel-controle h2, #painel-controle h3 {
+    color: #333;
+}
+
+#painel-controle label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+#painel-controle input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#painel-controle button {
+    width: 100%;
+    padding: 12px;
+    background-color: #2b78e4;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 25px;
+    cursor: pointer;
+}
+
+#painel-controle button:hover {
+    background-color: #1a5cb8;
+}
+
+/* Área Direita de Visualização da Folha (Estilo Papel A4) */
+#area-contrato {
+    flex: 1;
+    background-color: white;
+    margin: 30px;
+    padding: 40px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    min-height: 297mm;
+    box-sizing: border-box;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.tabela-resumo {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.tabela-resumo td {
+    border: 1px solid #000;
+    padding: 8px;
+    vertical-align: top;
+}
+
+.assinaturas {
+    margin-top: 50px;
+}
+
+.linha-assinatura {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+}
+
+/* REGRA DE OURO PARA IMPRESSÃO / SALVAR EM PDF */
+@media print {
+    .no-print {
+        display: none !important; /* Esconde o painel de controle */
+    }
+    
+    body {
+        background-color: white;
+    }
+
+    #area-contrato {
+        margin: 0;
+        padding: 0;
+        box-shadow: none;
+        width: 100%;
+    }
+    
+    @page {
+        size: A4;
+        margin: 20mm;
+    }
+}
