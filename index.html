@@ -11,63 +11,85 @@
     <div id="painel-controle" class="no-print">
         <h2>Dados do Contrato</h2>
         <form id="form-contrato">
-            <label>Cidade / Data do Contrato:</label>
-            <input type="text" id="in_data_doc" placeholder="Ex: Ananindeua, 25 de Maio de 2026">
+            
+            <label>Tipo de Contrato:</label>
+            <select id="select-tipo-contrato">
+                <option value="um_locatario_sem_fiador">1 Locatário - Sem Fiador</option>
+                <option value="um_locatario_com_fiador">1 Locatário - Com Fiador</option>
+                <option value="dois_locatarios_sem_fiador">2 Locatários - Sem Fiador</option>
+            </select>
 
             <label>Nº do Contrato:</label>
-            <input type="text" id="in_num_contrato" placeholder="Ex: 250526-01">
+            <input type="text" id="in_num_contrato" placeholder="Ex: 250422-02">
 
-            <h3>Locador</h3>
-            <label>Nome do Locador:</label>
-            <input type="text" id="in_nome_locador" placeholder="Nome Completo">
+            <label>Cidade / Data do Documento:</label>
+            <input type="text" id="in_data_doc" placeholder="Ex: Ananindeua, 23 de Abril de 2025">
 
-            <h3>Locatário</h3>
-            <label>Nome do Locatário:</label>
-            <input type="text" id="in_nome_locatario" placeholder="Nome Completo">
+            <h3>Partes</h3>
+            <label>Nome do Locador(a):</label>
+            <input type="text" id="in_nome_locador" placeholder="Ex: ELZA OLIVEIRA E SILVA">
+
+            <label>Nome do Locatário(a) 1:</label>
+            <input type="text" id="in_nome_locatario1" placeholder="Ex: KLISSIAN BIANCA DA SILVA">
+
+            <div id="grupo-locatario2" style="display: none;">
+                <label>Nome do Locatário(a) 2:</label>
+                <input type="text" id="in_nome_locatario2" placeholder="Nome do Segundo Locatário">
+            </div>
+
+            <div id="grupo-fiador" style="display: none;">
+                <label>Nome do Fiador(a):</label>
+                <input type="text" id="in_fiador" placeholder="Ex: JUCILEIDE LIMA DA SILVA">
+            </div>
 
             <h3>Imóvel e Valores</h3>
-            <label>Endereço Completo do Imóvel:</label>
-            <input type="text" id="in_endereco" placeholder="Rua, Número, Bairro, Cidade/UF">
+            <label>Endereço do Imóvel:</label>
+            <input type="text" id="in_endereco" placeholder="Ex: Tv. WE 42, Casa 132-B, Coqueiro - Ananindeua/PA">
 
             <label>Valor do Aluguel (R$):</label>
-            <input type="text" id="in_valor" placeholder="Ex: 1.200,00">
+            <input type="text" id="in_valor" placeholder="Ex: 750,00">
 
             <label>Desconto Pontualidade (R$):</label>
-            <input type="text" id="in_desconto" placeholder="Ex: 100,00">
+            <input type="text" id="in_desconto" placeholder="Ex: 50,00">
 
             <label>Dia do Vencimento:</label>
-            <input type="number" id="in_vencimento" placeholder="Ex: 10">
+            <input type="number" id="in_vencimento" placeholder="Ex: 25">
 
             <label>Prazo (Meses):</label>
             <input type="number" id="in_prazo" placeholder="Ex: 12">
 
             <label>Data de Início:</label>
-            <input type="text" id="in_inicio" placeholder="DD/MM/AAAA">
+            <input type="text" id="in_inicio" placeholder="Ex: 23/04/2025">
 
             <label>Data de Término:</label>
-            <input type="text" id="in_termino" placeholder="DD/MM/AAAA">
+            <input type="text" id="in_termino" placeholder="Ex: 23/04/2026">
 
             <button type="button" onclick="window.print()">Imprimir / Salvar PDF</button>
         </form>
     </div>
 
     <div id="area-contrato" class="print-area">
-        <div class="header-contrato">
+        
+        <div class="centralizado">
             <h1>CONTRATO DE LOCAÇÃO DE IMÓVEL RESIDENCIAL</h1>
-            <p><span id="txt_data_doc">_______________________, ___ de _____________ de ______</span></p>
+            <p><span class="dinamico-txt" id="txt_data_doc_topo">_______________________, ___ de _____________ de ______</span></p>
         </div>
 
         <table class="tabela-resumo">
             <tr>
                 <td colspan="2"><strong>RESUMO DO CONTRATO Nº:</strong> <span id="txt_num_contrato">___________</span></td>
             </tr>
-            <tr>
-                <td><strong>LOCADOR (A):</strong> <span id="txt_nome_locador">[NOME COMPLETO DO LOCADOR]</span></td>
+            <tr id="linha-locador">
+                <td><strong>LOCADOR (A):</strong> <span id="txt_nome_locador">[NOME DO LOCADOR]</span></td>
                 <td><strong>ADMINISTRADORA:</strong> KEILA PATRÍCIA MATOS DAS NEVES BARROS – CRECI 3533</td>
             </tr>
-            <tr>
-                <td><strong>LOCATÁRIO (A):</strong> <span id="txt_nome_locatario">[NOME COMPLETO DO LOCATÁRIO]</span></td>
-                <td><strong>GARANTIA:</strong> Sem fiador — contrato sem garantia de fiança</td>
+            <tr id="linha-locatarios-garantia">
+                <td id="celula-locatarios">
+                    <strong>LOCATÁRIO (A):</strong> <span id="txt_nome_locatario1">[NOME DO LOCATÁRIO]</span>
+                </td>
+                <td id="celula-garantia">
+                    <strong>GARANTIA:</strong> <span id="txt_garantia_status">Sem fiador — contrato sem garantia de fiança</span>
+                </td>
             </tr>
             <tr>
                 <td><strong>ENDEREÇO DO IMÓVEL:</strong> <span id="txt_endereco">[ENDEREÇO COMPLETO]</span></td>
@@ -86,33 +108,46 @@
             </tr>
         </table>
 
-        <div class="texto-clausulas">
-            <p>Pelo presente instrumento particular de contrato de locação, e na melhor forma de direito, as partes acima qualificadas ajustam e contratam entre si a presente locação, de acordo com os prazos, valores e condições supramencionadas, e com as cláusulas numeradas a seguir transcritas, as quais foram lidas, perfeitamente entendidas e aceitas por todos, cujas páginas vão devidamente rubricadas.</p>
-            
-            <h3>II – DO OBJETO, ESTADO E PRAZO</h3>
-            <p><strong>CLÁUSULA 1ª:</strong> O Locador é senhor e legítimo possuidor do imóvel descrito e caracterizado no resumo deste contrato, que pelo presente instrumento loca ao LOCATÁRIO, para uso e destinação especificada.</p>
-            <p><strong>CLÁUSULA 2ª:</strong> O LOCATÁRIO recebe o imóvel designado na cláusula anterior, pronto para o uso a que se destina, conforme termo de vistoria que fica fazendo parte deste contrato...</p>
-            
-            <h3>III – DO ALUGUEL, PAGAMENTO, REAJUSTES E ENCARGOS</h3>
-            <p><strong>CLÁUSULA 4ª:</strong> O valor mensal do aluguel é o estipulado no resumo deste contrato, e o pagamento do aluguel deverá ser efetuado todo dia através do boleto para a administradora...</p>
-        </div>
+        <p>Pelo presente instrumento particular de contrato de locação, e na melhor forma de direito, as partes acima qualificadas ajustam e contratam entre si a presente locação, de acordo com os prazos, valores e condições supramencionadas, e com as cláusulas numeradas a seguir transcritas, as quais foram lidas, perfeitamente entendidas e aceitas por todos, cujas páginas vão devidamente rubricadas.</p>
+        
+        <p>E, por estarem assim justos e contratados, firmam o presente, feito em 02 (DUAS) vias de igual teor e para um só efeito, que assinam juntamente com duas testemunhas.</p>
+
+        <div id="conteudo-clausulas"></div>
 
         <div class="assinaturas">
-            <p>_______________________, ___ de _____________ de ______</p>
-            <div class="linha-assinatura">
-                <div>
+            <p><span id="txt_data_doc_rodape">_______________________, ___ de _____________ de ______</span></p>
+            
+            <div class="bloco-assinatura-flex">
+                <div class="campo-assinatura">
                     <p>__________________________________________</p>
-                    <p>LOCADOR (A): <span id="txt_assinatura_locador"></span></p>
+                    <p>LOCADOR(A): <span id="ass_locador">_________________</span></p>
                 </div>
-                <div>
+                <div class="campo-assinatura">
                     <p>__________________________________________</p>
-                    <p>LOCATÁRIO (A): <span id="txt_assinatura_locatario"></span></p>
+                    <p>LOCATÁRIO(A) 1: <span id="ass_locatario1">_________________</span></p>
                 </div>
             </div>
-            <div class="linha-assinatura">
-                <div>
+
+            <div class="bloco-assinatura-flex" id="bloco-assinatura-extra">
+                </div>
+
+            <div class="bloco-assinatura-flex">
+                <div class="campo-assinatura">
                     <p>__________________________________________</p>
-                    <p>ADMINISTRADORA / CORRETORA<br>CRECI 3533</p>
+                    <p>CORRETORA: KEILA PATRÍCIA MATOS DAS NEVES BARROS – CRECI 3533</p>
+                </div>
+            </div>
+
+            <div class="bloco-assinatura-flex testemunhas-bloco">
+                <div class="campo-assinatura">
+                    <p>TESTEMUNHA 1</p>
+                    <p>Nome: _____________________________________</p>
+                    <p>RG: _______________________________________</p>
+                </div>
+                <div class="campo-assinatura">
+                    <p>TESTEMUNHA 2</p>
+                    <p>Nome: _____________________________________</p>
+                    <p>RG: _______________________________________</p>
                 </div>
             </div>
         </div>
