@@ -333,29 +333,24 @@ CLÁUSULA 30ª  DO DIREITO DE PREFERÊNCIA
 Na hipótese de o Locador desejar vender, prometer vender, ceder ou prometer ceder direitos de aquisição sobre o imóvel objeto desta locação, fica o Locador obrigado a dar conhecimento do negócio aos LOCATÁRIOS, mediante notificação extrajudicial, indicando o preço, as condições de pagamento, o prazo para exercício do direito e demais características essenciais do negócio. Os LOCATÁRIOS terão o prazo de 30 (trinta) dias para exercer seu direito de preferência na aquisição do imóvel, em igualdade de condições com terceiros, nos termos do art. 27 da Lei 8.245/91. O não exercício desse direito no prazo estabelecido implicará sua renúncia para aquela oportunidade específica.
 `;
 
-
 // =====================================================================
-// 2. SISTEMA INTELIGENTE DE FORMATAÇÃO (NÃO PRECISA MEXER AQUI)
+// 2. SISTEMA INTELIGENTE DE FORMATAÇÃO E LÓGICA
 // =====================================================================
 
-// Esta função pega o texto puro que você colou e transforma em formatação oficial
 function formatarTextoDoContrato(textoPuro) {
     const linhas = textoPuro.split('\n');
     let htmlResult = '';
     
     linhas.forEach(linha => {
         let txt = linha.trim();
-        if (txt === '') return; // Pula linhas em branco
+        if (txt === '') return; 
         
-        // Se for um título em números romanos (ex: II - DO OBJETO...)
         if (/^[IVX]+\s*[-–]/i.test(txt)) {
             htmlResult += `<h3>${txt}</h3>`;
         } 
-        // Se for o título de uma cláusula (ex: CLÁUSULA 1ª)
         else if (txt.toUpperCase().startsWith('CLÁUSULA')) {
             htmlResult += `<p style="margin-bottom: 2px;"><strong>${txt}</strong></p>`;
         } 
-        // Parágrafos normais do texto
         else {
             htmlResult += `<p style="margin-top: 2px;">${txt}</p>`;
         }
@@ -400,7 +395,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     document.getElementById('in_nome_locatario1').addEventListener('input', function() {
-        const sufixo = selectTipo.value === 'dois_locatarios_sem_fiador' ? " 1" : "";
+        const sufixo = (selectTipo.value === 'dois_locatarios_sem_fiador' || selectTipo.value === 'dois_locatarios_com_fiador') ? " 1" : "";
         document.getElementById('celula-locatarios').querySelector('strong').textContent = `LOCATÁRIO (A)${sufixo}:`;
         document.getElementById('txt_nome_locatario1').textContent = this.value || "[NOME DO LOCATÁRIO]";
         document.getElementById('ass_locatario1').textContent = this.value.toUpperCase() || "_________________";
@@ -409,107 +404,102 @@ document.addEventListener("DOMContentLoaded", function() {
     selectTipo.addEventListener('change', adaptarInterfaceEContrato);
 
     function adaptarInterfaceEContrato() {
-    const tipo = selectTipo.value;
-    const divClausulas = document.getElementById('conteudo-clausulas');
-    
-    // 1. Vincula a sua nova variável de texto ou chave do objeto
-    if (tipo === 'um_locatario_sem_fiador') {
-        divClausulas.innerHTML = formatarTextoDoContrato(texto_um_locatario_sem_fiador);
-    } else if (tipo === 'um_locatario_com_fiador') {
-        divClausulas.innerHTML = formatarTextoDoContrato(texto_um_locatario_com_fiador);
-    } else if (tipo === 'dois_locatarios_sem_fiador') {
-        divClausulas.innerHTML = formatarTextoDoContrato(texto_dois_locatarios_sem_fiador);
-    } else if (tipo === 'dois_locatarios_com_fiador') {
-        // Certifique-se de que o nome da variável aqui seja igual ao que você criou para as cláusulas
-        divClausulas.innerHTML = formatarTextoDoContrato(texto_dois_locatarios_com_fiador);
-    }
-
-    // 2. Controla a exibição dos painéis de input (Liga/Desliga conforme o modelo)
-    document.getElementById('grupo-locatario2').style.display = (tipo === 'dois_locatarios_sem_fiador' || tipo === 'dois_locatarios_com_fiador') ? 'block' : 'none';
-    document.getElementById('grupo-fiador').style.display = (tipo === 'um_locatario_com_fiador' || tipo === 'dois_locatarios_com_fiador') ? 'block' : 'none';
-
-    const celulaLocatarios = document.getElementById('celula-locatarios');
-    const celulaGarantia = document.getElementById('celula-garantia');
-    const blocoAssinaturaExtra = document.getElementById('bloco-assinatura-extra');
-    
-    blocoAssinaturaExtra.innerHTML = ""; // Limpa o bloco de assinaturas extras antes de redesenhar
-
-    // 3. Montagem da Tabela Resumo e das Assinaturas para cada cenário
-    if (tipo === 'um_locatario_sem_fiador') {
-        celulaLocatarios.innerHTML = `<strong>LOCATÁRIO (A):</strong> <span id="txt_nome_locatario1">___________</span>`;
-        celulaGarantia.innerHTML = `<strong>GARANTIA:</strong> <span id="txt_garantia_status">Sem fiador — contrato sem garantia de fiança</span>`;
-    } 
-    else if (tipo === 'um_locatario_com_fiador') {
-        celulaLocatarios.innerHTML = `<strong>LOCATÁRIO (A):</strong> <span id="txt_nome_locatario1">___________</span>`;
-        celulaGarantia.innerHTML = `<strong>FIADOR (A):</strong> <span id="txt_nome_fiador">[NOME DO FIADOR]</span>`;
+        const tipo = selectTipo.value;
+        const divClausulas = document.getElementById('conteudo-clausulas');
         
-        blocoAssinaturaExtra.innerHTML = `
-            <div class="campo-assinatura">
-                <p>__________________________________________</p>
-                <p>FIADOR(A): <span id="ass_fiador">_________________</span></p>
-            </div>
-        `;
+        // 1. Injeta o texto formatado no HTML
+        if (tipo === 'um_locatario_sem_fiador') {
+            divClausulas.innerHTML = formatarTextoDoContrato(texto_um_locatario_sem_fiador);
+        } else if (tipo === 'um_locatario_com_fiador') {
+            divClausulas.innerHTML = formatarTextoDoContrato(texto_um_locatario_com_fiador);
+        } else if (tipo === 'dois_locatarios_sem_fiador') {
+            divClausulas.innerHTML = formatarTextoDoContrato(texto_dois_locatarios_sem_fiador);
+        } else if (tipo === 'dois_locatarios_com_fiador') {
+            divClausulas.innerHTML = formatarTextoDoContrato(texto_dois_locatarios_com_fiador);
+        }
+
+        // 2. Oculta ou mostra campos no menu esquerdo
+        document.getElementById('grupo-locatario2').style.display = (tipo === 'dois_locatarios_sem_fiador' || tipo === 'dois_locatarios_com_fiador') ? 'block' : 'none';
+        document.getElementById('grupo-fiador').style.display = (tipo === 'um_locatario_com_fiador' || tipo === 'dois_locatarios_com_fiador') ? 'block' : 'none';
+
+        // 3. Gerencia o layout das tabelas e assinaturas
+        const celulaLocatarios = document.getElementById('celula-locatarios');
+        const celulaGarantia = document.getElementById('celula-garantia');
+        const blocoAssinaturaExtra = document.getElementById('bloco-assinatura-extra');
         
-        document.getElementById('in_fiador').addEventListener('input', function() {
-            document.getElementById('txt_nome_fiador').textContent = this.value || "[NOME DO FIADOR]";
-            document.getElementById('ass_fiador').textContent = this.value.toUpperCase() || "_________________";
-        });
-    } 
-    else if (tipo === 'dois_locatarios_sem_fiador') {
-        celulaLocatarios.innerHTML = `
-            <strong>LOCATÁRIO (A) 1:</strong> <span id="txt_nome_locatario1">___________</span><br>
-            <strong>LOCATÁRIO (A) 2:</strong> <span id="txt_nome_locatario2">[NOME DO LOCATÁRIO 2]</span>
-        `;
-        celulaGarantia.innerHTML = `<strong>GARANTIA:</strong> <span id="txt_garantia_status">Sem fiador — contrato sem garantia de fiança</span>`;
-        
-        blocoAssinaturaExtra.innerHTML = `
-            <div class="campo-assinatura">
-                <p>__________________________________________</p>
-                <p>LOCATÁRIO(A) 2: <span id="ass_locatario2">_________________</span></p>
-            </div>
-        `;
+        blocoAssinaturaExtra.innerHTML = ""; 
 
-        document.getElementById('in_nome_locatario2').addEventListener('input', function() {
-            document.getElementById('txt_nome_locatario2').textContent = this.value || "[NOME DO LOCATÁRIO 2]";
-            document.getElementById('ass_locatario2').textContent = this.value.toUpperCase() || "_________________";
-        });
-    }
-    else if (tipo === 'dois_locatarios_com_fiador') {
-        // Cenário combinado: Mostra os dois inquilinos na esquerda e o fiador na direita
-        celulaLocatarios.innerHTML = `
-            <strong>LOCATÁRIO (A) 1:</strong> <span id="txt_nome_locatario1">___________</span><br>
-            <strong>LOCATÁRIO (A) 2:</strong> <span id="txt_nome_locatario2">[NOME DO LOCATÁRIO 2]</span>
-        `;
-        celulaGarantia.innerHTML = `<strong>FIADOR (A):</strong> <span id="txt_nome_fiador">[NOME DO FIADOR]</span>`;
-        
-        // Cria duas linhas de assinatura adicionais (uma para o segundo locatário e outra para o fiador)
-        blocoAssinaturaExtra.innerHTML = `
-            <div class="campo-assinatura">
-                <p>__________________________________________</p>
-                <p>LOCATÁRIO(A) 2: <span id="ass_locatario2">_________________</span></p>
-            </div>
-            <div class="campo-assinatura">
-                <p>__________________________________________</p>
-                <p>FIADOR(A): <span id="ass_fiador">_________________</span></p>
-            </div>
-        `;
+        if (tipo === 'um_locatario_sem_fiador') {
+            celulaLocatarios.innerHTML = `<strong>LOCATÁRIO (A):</strong> <span id="txt_nome_locatario1">___________</span>`;
+            celulaGarantia.innerHTML = `<strong>GARANTIA:</strong> <span id="txt_garantia_status">Sem fiador — contrato sem garantia de fiança</span>`;
+        } 
+        else if (tipo === 'um_locatario_com_fiador') {
+            celulaLocatarios.innerHTML = `<strong>LOCATÁRIO (A):</strong> <span id="txt_nome_locatario1">___________</span>`;
+            celulaGarantia.innerHTML = `<strong>FIADOR (A):</strong> <span id="txt_nome_fiador">[NOME DO FIADOR]</span>`;
+            
+            blocoAssinaturaExtra.innerHTML = `
+                <div class="campo-assinatura">
+                    <p>__________________________________________</p>
+                    <p>FIADOR(A): <span id="ass_fiador">_________________</span></p>
+                </div>
+            `;
+            
+            document.getElementById('in_fiador').addEventListener('input', function() {
+                document.getElementById('txt_nome_fiador').textContent = this.value || "[NOME DO FIADOR]";
+                document.getElementById('ass_fiador').textContent = this.value.toUpperCase() || "_________________";
+            });
+        } 
+        else if (tipo === 'dois_locatarios_sem_fiador') {
+            celulaLocatarios.innerHTML = `
+                <strong>LOCATÁRIO (A) 1:</strong> <span id="txt_nome_locatario1">___________</span><br>
+                <strong>LOCATÁRIO (A) 2:</strong> <span id="txt_nome_locatario2">[NOME DO LOCATÁRIO 2]</span>
+            `;
+            celulaGarantia.innerHTML = `<strong>GARANTIA:</strong> <span id="txt_garantia_status">Sem fiador — contrato sem garantia de fiança</span>`;
+            
+            blocoAssinaturaExtra.innerHTML = `
+                <div class="campo-assinatura">
+                    <p>__________________________________________</p>
+                    <p>LOCATÁRIO(A) 2: <span id="ass_locatario2">_________________</span></p>
+                </div>
+            `;
 
-        // Ativa os ouvintes para atualizar os dois campos extras dinamicamente
-        document.getElementById('in_nome_locatario2').addEventListener('input', function() {
-            document.getElementById('txt_nome_locatario2').textContent = this.value || "[NOME DO LOCATÁRIO 2]";
-            document.getElementById('ass_locatario2').textContent = this.value.toUpperCase() || "_________________";
-        });
+            document.getElementById('in_nome_locatario2').addEventListener('input', function() {
+                document.getElementById('txt_nome_locatario2').textContent = this.value || "[NOME DO LOCATÁRIO 2]";
+                document.getElementById('ass_locatario2').textContent = this.value.toUpperCase() || "_________________";
+            });
+        }
+        else if (tipo === 'dois_locatarios_com_fiador') {
+            celulaLocatarios.innerHTML = `
+                <strong>LOCATÁRIO (A) 1:</strong> <span id="txt_nome_locatario1">___________</span><br>
+                <strong>LOCATÁRIO (A) 2:</strong> <span id="txt_nome_locatario2">[NOME DO LOCATÁRIO 2]</span>
+            `;
+            celulaGarantia.innerHTML = `<strong>FIADOR (A):</strong> <span id="txt_nome_fiador">[NOME DO FIADOR]</span>`;
+            
+            blocoAssinaturaExtra.innerHTML = `
+                <div class="campo-assinatura">
+                    <p>__________________________________________</p>
+                    <p>LOCATÁRIO(A) 2: <span id="ass_locatario2">_________________</span></p>
+                </div>
+                <div class="campo-assinatura">
+                    <p>__________________________________________</p>
+                    <p>FIADOR(A): <span id="ass_fiador">_________________</span></p>
+                </div>
+            `;
 
-        document.getElementById('in_fiador').addEventListener('input', function() {
-            document.getElementById('txt_nome_fiador').textContent = this.value || "[NOME DO FIADOR]";
-            document.getElementById('ass_fiador').textContent = this.value.toUpperCase() || "_________________";
-        });
-    }
+            document.getElementById('in_nome_locatario2').addEventListener('input', function() {
+                document.getElementById('txt_nome_locatario2').textContent = this.value || "[NOME DO LOCATÁRIO 2]";
+                document.getElementById('ass_locatario2').textContent = this.value.toUpperCase() || "_________________";
+            });
 
-    // Limpa os campos de texto principais para evitar sobreposição ao alternar de modelo
-    document.getElementById('in_nome_locatario1').value = "";
-    document.getElementById('in_nome_locador').value = "";
-}
+            document.getElementById('in_fiador').addEventListener('input', function() {
+                document.getElementById('txt_nome_fiador').textContent = this.value || "[NOME DO FIADOR]";
+                document.getElementById('ass_fiador').textContent = this.value.toUpperCase() || "_________________";
+            });
+        }
+
+        // Limpa os campos principais ao alternar de modelo para evitar sujeira
+        document.getElementById('in_nome_locatario1').value = "";
+        document.getElementById('in_nome_locador').value = "";
     }
 
     adaptarInterfaceEContrato();
