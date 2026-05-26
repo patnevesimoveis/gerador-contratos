@@ -3,7 +3,8 @@
 // Copie a partir da linha "II – DO OBJETO, ESTADO E PRAZO" até a última cláusula
 // =====================================================================
 
-const texto_um_locatario_sem_fiador = `CLÁUSULA 1ª  
+const texto_um_locatario_sem_fiador = `
+CLÁUSULA 1ª  
 O Locador é senhor e legítimo possuidor do imóvel descrito e caracterizado no item 2 do preâmbulo deste contrato, que pelo presente instrumento loca ao LOCATÁRIO, para uso e destinação especificada no item 3.
 CLÁUSULA 2ª  
 O LOCATÁRIO recebe o imóvel designado na cláusula anterior, pronto para o uso a que se destina, conforme termo de vistoria que fica fazendo parte deste contrato, obrigando-se a assim mantê-lo em bom estado de conservação e funcionamento e assim restituí-lo livre de objetos, coisas e pessoas, no final desta locação, observando-se o seguinte:
@@ -77,7 +78,8 @@ CLÁUSULA 27ª  DO DIREITO DE PREFERÊNCIA
 Na hipótese de o Locador desejar vender, prometer vender, ceder ou prometer ceder direitos de aquisição sobre o imóvel objeto desta locação, fica o Locador obrigado a dar conhecimento do negócio ao LOCATÁRIO, mediante notificação extrajudicial, indicando o preço, as condições de pagamento, o prazo para exercício do direito e demais características essenciais do negócio. O LOCATÁRIO terá o prazo de 30 (trinta) dias para exercer seu direito de preferência na aquisição do imóvel, em igualdade de condições com terceiros, nos termos do art. 27 da Lei 8.245/91. O não exercício desse direito no prazo estabelecido implicará sua renúncia para aquela oportunidade específica.
 `;
 
-const texto_um_locatario_com_fiador = `CLÁUSULA 1ª  
+const texto_um_locatario_com_fiador = `
+CLÁUSULA 1ª  
 O Locador é senhor e legítimo possuidor do imóvel descrito e caracterizado no item 2 do preâmbulo deste contrato, que pelo presente instrumento loca ao LOCATÁRIO, para uso e destinação especificada no item 3.
 CLÁUSULA 2ª  
 O LOCATÁRIO recebe o imóvel designado na cláusula anterior, pronto para o uso a que se destina, conforme termo de vistoria que fica fazendo parte deste contrato, obrigando-se a assim mantê-lo em bom estado de conservação e funcionamento e assim restituí-lo livre de objetos, coisas e pessoas, no final desta locação, observando-se o seguinte:
@@ -164,7 +166,8 @@ CLÁUSULA 29ª  DO DIREITO DE PREFERÊNCIA
 Na hipótese de o Locador desejar vender, prometer vender, ceder ou prometer ceder direitos de aquisição sobre o imóvel objeto desta locação, fica o Locador obrigado a dar conhecimento do negócio ao LOCATÁRIO, mediante notificação extrajudicial, indicando o preço, as condições de pagamento, o prazo para exercício do direito e demais características essenciais do negócio. O LOCATÁRIO terá o prazo de 30 (trinta) dias para exercer seu direito de preferência na aquisição do imóvel, em igualdade de condições com terceiros, nos termos do art. 27 da Lei 8.245/91. O não exercício desse direito no prazo estabelecido implicará sua renúncia para aquela oportunidade específica.
 `;
 
-const texto_dois_locatarios_sem_fiador = `CLÁUSULA 1ª  
+const texto_dois_locatarios_sem_fiador = `
+CLÁUSULA 1ª  
 O Locador é senhor e legítimo possuidor do imóvel descrito e caracterizado no item 2 do preâmbulo deste contrato, que pelo presente instrumento loca aos LOCATÁRIOS, para uso e destinação especificada no item 3.
 CLÁUSULA 2ª  
 OS LOCATÁRIOS recebem o imóvel designado na cláusula anterior, pronto para o uso a que se destina, conforme termo de vistoria que fica fazendo parte deste contrato, obrigando-se a assim mantê-lo em bom estado de conservação e funcionamento e assim restituí-lo livre de objetos, coisas e pessoas, no final desta locação, observando-se o seguinte:
@@ -240,7 +243,8 @@ CLÁUSULA 28ª  DO DIREITO DE PREFERÊNCIA
 Na hipótese de o Locador desejar vender, prometer vender, ceder ou prometer ceder direitos de aquisição sobre o imóvel objeto desta locação, fica o Locador obrigado a dar conhecimento do negócio aos LOCATÁRIOS, mediante notificação extrajudicial, indicando o preço, as condições de pagamento, o prazo para exercício do direito e demais características essenciais do negócio. Os LOCATÁRIOS terão o prazo de 30 (trinta) dias para exercer seu direito de preferência na aquisição do imóvel, em igualdade de condições com terceiros, nos termos do art. 27 da Lei 8.245/91. O não exercício desse direito no prazo estabelecido implicará sua renúncia para aquela oportunidade específica.
 `;
 
-const texto_dois_locatarios_com_fiador = `CLÁUSULA 1ª  
+const texto_dois_locatarios_com_fiador = `
+CLÁUSULA 1ª  
 O Locador é senhor e legítimo possuidor do imóvel descrito e caracterizado no item 2 do preâmbulo deste contrato, que pelo presente instrumento loca aos LOCATÁRIOS, para uso e destinação especificada no item 3.
 CLÁUSULA 2ª  
 OS LOCATÁRIOS recebem o imóvel designado na cláusula anterior, pronto para o uso a que se destina, conforme termo de vistoria que fica fazendo parte deste contrato, obrigando-se a assim mantê-lo em bom estado de conservação e funcionamento e assim restituí-lo livre de objetos, coisas e pessoas, no final desta locação, observando-se o seguinte:
